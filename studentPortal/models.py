@@ -68,7 +68,7 @@ class Student(models.Model):
     date_of_birth = models.DateField()
     
     # Academic Information
-    class_id = models.ForeignKey('SchoolClass', on_delete=models.PROTECT)
+    class_id = models.ForeignKey('SchoolClass', on_delete=models.PROTECT, related_name='student_class')
 
     #These choices must be similar to those in the classes.
     STREAM_CHOICES = [
@@ -80,7 +80,7 @@ class Student(models.Model):
     class_stream = models.CharField(max_length=20, blank=True, null=True, choices=STREAM_CHOICES)
     
     # Parent/Guardian Information
-    parent_id = models.ForeignKey('Parent', on_delete=models.PROTECT)
+    parent_id = models.ForeignKey('Parent', on_delete=models.PROTECT, related_name='parent')
     
     # Academic Term
     TERM_CHOICES = [
