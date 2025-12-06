@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Fees Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            /* Professional Color Palette */
+            --primary-blue: #2c3e50;
+            --secondary-blue: #3498db;
+            --accent-teal: #1abc9c;
+            --accent-green: #27ae60;
+            --accent-orange: #e67e22;
+            --accent-red: #e74c3c;
+            --accent-purple: #9b59b6;
+            
+            /* Neutral Colors */
+            --light-gray: #ecf0f1;
+            --medium-gray: #bdc3c7;
+            --dark-gray: #7f8c8d;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.15);
+            --shadow-lg: 0 8px 16px rgba(0,0,0,0.2);
+            
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            
+            /* Font */
+            --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* ===== LAYOUT ===== */
+        .container {
+            /*max-width: 1200px;*/
+            margin: 0 auto;
+            padding: var(--space-md);
+        }
+        
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1a2530 100%);
+            color: var(--text-light);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .student-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: var(--space-xs);
+            font-weight: 600;
+        }
+        
+        .student-info p {
+            color: var(--light-gray);
+            font-size: 0.95rem;
+        }
+        
+        .status-badge {
+            background: var(--accent-green);
+            color: white;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: var(--space-xs);
+        }
+        
+        /* ===== DASHBOARD CARDS ===== */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--secondary-blue);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: var(--space-sm);
+            color: white;
+        }
+        
+        .card-icon.fees { background: var(--accent-red); }
+        .card-icon.paid { background: var(--accent-green); }
+        .card-icon.pending { background: var(--accent-orange); }
+        .card-icon.overdue { background: var(--accent-purple); }
+        
+        .card h3 {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
+        }
+        
+        .card .amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .card .percentage {
+            font-size: 0.9rem;
+            color: var(--medium-gray);
+        }
+        
+        .percentage.positive { color: var(--accent-green); }
+        .percentage.negative { color: var(--accent-red); }
+        
+        /* ===== FEE STRUCTURE SECTION ===== */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 2px solid var(--light-gray);
+            color: var(--primary-blue);
+        }
+        
+        .section-title i {
+            color: var(--secondary-blue);
+        }
+        
+        .fee-structure {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-bottom: var(--space-lg);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background: var(--primary-blue);
+            color: white;
+            padding: var(--space-sm);
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .table td {
+            padding: var(--space-sm);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .table tr:hover {
+            background: var(--light-gray);
+        }
+        
+        .fee-status {
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-paid { background: #d5f4e6; color: var(--accent-green); }
+        .status-pending { background: #fef5e7; color: var(--accent-orange); }
+        .status-overdue { background: #fdeaea; color: var(--accent-red); }
+        
+        /* ===== PAYMENT HISTORY ===== */
+        .payment-history {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-bottom: var(--space-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: var(--space-lg);
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--secondary-blue);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--space-lg);
+            padding: var(--space-sm);
+            background: var(--light-gray);
+            border-radius: var(--radius-sm);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-teal);
+            border: 3px solid white;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .payment-date {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            margin-bottom: var(--space-xs);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .payment-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .payment-method {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: white;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+        }
+        
+        /* ===== INVOICES SECTION ===== */
+        .invoices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .invoice-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
+        }
+        
+        .invoice-card:hover {
+            border-color: var(--secondary-blue);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-sm);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .invoice-id {
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .invoice-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .detail-label {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .invoice-actions {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-sm);
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background: var(--secondary-blue);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--text-dark);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--medium-gray);
+        }
+        
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-gray);
+            color: var(--text-dark);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-icon:hover {
+            background: var(--secondary-blue);
+            color: white;
+        }
+        
+        /* ===== SUMMARY SECTION ===== */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .summary-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .summary-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .summary-icon.total { color: var(--primary-blue); }
+        .summary-icon.discount { color: var(--accent-green); }
+        .summary-icon.tax { color: var(--accent-red); }
+        .summary-icon.net { color: var(--accent-purple); }
+        
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--primary-blue);
+            color: white;
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-lg);
+            text-align: center;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            margin: var(--space-md) 0;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent-teal);
+        }
+        
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--space-sm);
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .invoices-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+        }
+        
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .btn, .footer, .btn-icon {
+                display: none !important;
+            }
+            
+            .card, .fee-structure, .payment-history, .invoice-card {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="student-info">
+                    <h1>John Michael Anderson</h1>
+                    <p>Student ID: STU-2024-0012 • Grade 11 • Science Stream</p>
+                    <div class="status-badge">
+                        <i class="fas fa-check-circle"></i>
+                        Fees Status: Active
+                    </div>
+                </div>
+            </div>
+            <div class="current-balance">
+                <h3 style="color: var(--light-gray); margin-bottom: var(--space-xs);">Current Balance</h3>
+                <div style="font-size: 2rem; font-weight: 700; color: white;">$4,250.00</div>
+                <p style="color: var(--light-gray); margin-top: var(--space-xs);">Due Date: Dec 15, 2024</p>
+            </div>
+        </header>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+            <div class="card">
+                <div class="card-icon fees">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3>Total Fees</h3>
+                <div class="amount">$12,500.00</div>
+                <div class="percentage positive">+5% from last year</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon paid">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Amount Paid</h3>
+                <div class="amount">$8,250.00</div>
+                <div class="percentage positive">66% Paid</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon pending">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Pending Payment</h3>
+                <div class="amount">$3,750.00</div>
+                <div class="percentage negative">Due in 30 days</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon overdue">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>Overdue Amount</h3>
+                <div class="amount">$500.00</div>
+                <div class="percentage negative">- Past due</div>
+            </div>
+        </div>
+
+        <!-- Fee Structure -->
+        <div class="fee-structure">
+            <h2 class="section-title">
+                <i class="fas fa-list-alt"></i>
+                Fee Structure 2024-2025
+            </h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Fee Type</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Payment Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tuition Fee</td>
+                        <td>$8,000.00</td>
+                        <td>Aug 31, 2024</td>
+                        <td><span class="fee-status status-paid">Paid</span></td>
+                        <td>Aug 25, 2024</td>
+                    </tr>
+                    <tr>
+                        <td>Lab Fees</td>
+                        <td>$1,500.00</td>
+                        <td>Sep 15, 2024</td>
+                        <td><span class="fee-status status-paid">Paid</span></td>
+                        <td>Sep 10, 2024</td>
+                    </tr>
+                    <tr>
+                        <td>Library Fee</td>
+                        <td>$300.00</td>
+                        <td>Oct 01, 2024</td>
+                        <td><span class="fee-status status-pending">Pending</span></td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Sports Fee</td>
+                        <td>$450.00</td>
+                        <td>Oct 15, 2024</td>
+                        <td><span class="fee-status status-overdue">Overdue</span></td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Exam Fees</td>
+                        <td>$1,200.00</td>
+                        <td>Nov 30, 2024</td>
+                        <td><span class="fee-status status-pending">Pending</span></td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Annual Charges</td>
+                        <td>$1,050.00</td>
+                        <td>Dec 15, 2024</td>
+                        <td><span class="fee-status status-pending">Pending</span></td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Payment History -->
+        <div class="payment-history">
+            <h2 class="section-title">
+                <i class="fas fa-history"></i>
+                Payment History
+            </h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="payment-date">
+                        <i class="far fa-calendar"></i>
+                        September 10, 2024
+                    </div>
+                    <div class="payment-amount">$1,500.00</div>
+                    <p>Lab Fees Payment</p>
+                    <div class="payment-method">
+                        <i class="fas fa-credit-card"></i>
+                        Credit Card • Receipt: INV-2024-0012
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="payment-date">
+                        <i class="far fa-calendar"></i>
+                        August 25, 2024
+                    </div>
+                    <div class="payment-amount">$8,000.00</div>
+                    <p>Tuition Fee - First Installment</p>
+                    <div class="payment-method">
+                        <i class="fas fa-university"></i>
+                        Bank Transfer • Receipt: INV-2024-0008
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="payment-date">
+                        <i class="far fa-calendar"></i>
+                        July 15, 2024
+                    </div>
+                    <div class="payment-amount">$750.00</div>
+                    <p>Admission Fees</p>
+                    <div class="payment-method">
+                        <i class="fas fa-wallet"></i>
+                        Cash Payment • Receipt: INV-2024-0001
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invoices Section -->
+        <div class="section-title">
+            <i class="fas fa-file-invoice-dollar"></i>
+            Recent Invoices
+        </div>
+        <div class="invoices-grid">
+            <div class="invoice-card">
+                <div class="invoice-header">
+                    <div>
+                        <div class="invoice-id">INV-2024-0015</div>
+                        <div style="color: var(--dark-gray); font-size: 0.9rem;">Library & Sports Fee</div>
+                    </div>
+                    <div style="font-weight: 700; color: var(--accent-red);">$750.00</div>
+                </div>
+                <div class="invoice-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Issue Date</span>
+                        <span class="detail-value">Oct 01, 2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Due Date</span>
+                        <span class="detail-value">Oct 31, 2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="fee-status status-pending">Pending</span>
+                    </div>
+                </div>
+                <div class="invoice-actions">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-print"></i>
+                        Print
+                    </button>
+                </div>
+            </div>
+            
+            <div class="invoice-card">
+                <div class="invoice-header">
+                    <div>
+                        <div class="invoice-id">INV-2024-0012</div>
+                        <div style="color: var(--dark-gray); font-size: 0.9rem;">Lab Fees</div>
+                    </div>
+                    <div style="font-weight: 700; color: var(--accent-green);">$1,500.00</div>
+                </div>
+                <div class="invoice-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Issue Date</span>
+                        <span class="detail-value">Sep 01, 2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Paid Date</span>
+                        <span class="detail-value">Sep 10, 2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="fee-status status-paid">Paid</span>
+                    </div>
+                </div>
+                <div class="invoice-actions">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-print"></i>
+                        Print
+                    </button>
+                </div>
+            </div>
+            
+            <div class="invoice-card">
+                <div class="invoice-header">
+                    <div>
+                        <div class="invoice-id">INV-2024-0008</div>
+                        <div style="color: var(--dark-gray); font-size: 0.9rem;">Tuition Fee</div>
+                    </div>
+                    <div style="font-weight: 700; color: var(--accent-green);">$8,000.00</div>
+                </div>
+                <div class="invoice-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Issue Date</span>
+                        <span class="detail-value">Aug 01, 2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Paid Date</span>
+                        <span class="detail-value">Aug 25, 2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="fee-status status-paid">Paid</span>
+                    </div>
+                </div>
+                <div class="invoice-actions">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-print"></i>
+                        Print
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="summary-icon total">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h3>Total Annual Fee</h3>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-blue);">$12,500.00</div>
+            </div>
+            
+            <div class="summary-card">
+                <div class="summary-icon discount">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <h3>Scholarship</h3>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-green);">$1,000.00</div>
+            </div>
+            
+            <div class="summary-card">
+                <div class="summary-icon tax">
+                    <i class="fas fa-receipt"></i>
+                </div>
+                <h3>Tax Amount</h3>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-red);">$250.00</div>
+            </div>
+            
+            <div class="summary-card">
+                <div class="summary-icon net">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h3>Net Payable</h3>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-purple);">$11,250.00</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <h3>Need Help with Fee Payments?</h3>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <div>Accounts Office</div>
+                        <div style="font-weight: 600;">+1 (555) 123-4567</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <div>Email Support</div>
+                        <div style="font-weight: 600;">fees@school.edu</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <div>Office Hours</div>
+                        <div style="font-weight: 600;">Mon-Fri: 9AM-5PM</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Fee Policy</a>
+                <a href="#" class="footer-link">Payment Methods</a>
+                <a href="#" class="footer-link">Scholarships</a>
+                <a href="#" class="footer-link">FAQ</a>
+            </div>
+            <p style="margin-top: var(--space-md); color: var(--light-gray);">
+                © 2024 School Name. All rights reserved. | Last Updated: October 15, 2024
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
