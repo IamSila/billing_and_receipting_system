@@ -2,5 +2,8 @@
 
 clone the project using the link below
 ```
-https://github.com/IamSila/billing_and_receipting_system
+git clone https://github.com/IamSila/billing_and_receipting_system
+cd billing_and_receipting_system
+python -m pip -r requirements.txt
 ```
+
