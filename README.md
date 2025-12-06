@@ -10,5 +10,5 @@ python manage.py runserver
 
 On the browser enter the following:
 ```
-http://127.0.0.1/studentportal/
+http://127.0.0.1/studentportal/home/
 ```
