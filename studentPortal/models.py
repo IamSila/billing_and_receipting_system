@@ -35,22 +35,21 @@ class Parent(models.Model):
 
 # school classes table
 class SchoolClass(models.Model):
-    class Streams(models.TextChoices):
-        A = "A", "stream A"
-        B = "B", "stream B"
-        C = "C", "stream C"
-        D = "D", "stream D"
-
+    STREAM_CHOICES = [
+        ('A', 'streamA'),
+        ('B', 'streamB'),
+        ('C', 'streamC'),
+        ('D', 'streamD'),
+    ]
     id = models.AutoField(primary_key=True)
     class_name =models.CharField(max_length=50)
-    stream = models.CharField(max_length=10,blank=True, null=True, choices=Streams, default=Streams)
+    stream = models.CharField(max_length=10,blank=True, null=True, choices=STREAM_CHOICES)
     academic_year = models.CharField(max_length=20)
     max_students = models.IntegerField()
     is_active = models.BooleanField(default=True)
 
 
 # student table
-from django.db import models
 
 class Student(models.Model):
     """
@@ -73,10 +72,10 @@ class Student(models.Model):
 
     #These choices must be similar to those in the classes.
     STREAM_CHOICES = [
-        ('A', 'stream A'),
-        ('B', 'stream B'),
-        ('C', 'stream C'),
-        ('D', 'stream D'),
+        ('A', 'streamA'),
+        ('B', 'streamB'),
+        ('C', 'streamC'),
+        ('D', 'streamD'),
     ]
     class_stream = models.CharField(max_length=20, blank=True, null=True, choices=STREAM_CHOICES)
     
