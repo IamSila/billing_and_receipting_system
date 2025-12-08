@@ -556,9 +556,13 @@
                         <i class="fas fa-check-circle"></i>
                         Fees Status: Active
                     </div>
+                    
                 </div>
             </div>
             <div class="current-balance">
+                <div class="logout">
+                        <p>hello {{request.user}} <a href="{% url 'studentPortal:logout' %}">logout</a></p>
+                    </div>
                 <h3 style="color: var(--light-gray); margin-bottom: var(--space-xs);">Current Balance</h3>
                 <div style="font-size: 2rem; font-weight: 700; color: white;">$4,250.00</div>
                 <p style="color: var(--light-gray); margin-top: var(--space-xs);">Due Date: Dec 15, 2024</p>

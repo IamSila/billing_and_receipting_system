@@ -443,6 +443,7 @@
             
             <!-- Login Form -->
             <form id="loginForm" action="#" method="post">
+                {% csrf_token %}
                 <!-- Username Field -->
                 <div class="form-group">
                     <label class="form-label" for="username">
@@ -453,7 +454,8 @@
                         <i class="fas fa-user input-icon"></i>
                         <input 
                             type="text" 
-                            id="username" 
+                            id="username"
+                            name="username" 
                             class="form-control" 
                             placeholder="Enter username or student ID"
                             required
@@ -471,7 +473,8 @@
                         <i class="fas fa-lock input-icon"></i>
                         <input 
                             type="password" 
-                            id="password" 
+                            id="password"
+                            name="password" 
                             class="form-control" 
                             placeholder="Enter your password"
                             required
@@ -492,7 +495,9 @@
                         Forgot password?
                     </a>
                 </div>
-                
+                {% for message in messages%}
+                    <p class="message">{{message}}</p>
+                {% endfor %}
                 <!-- Login Button -->
                 <button type="submit" class="btn btn-primary">
                     <span>Sign In</span>
@@ -504,7 +509,7 @@
             <!-- Sign Up Section -->
             <div class="signup-section">
                 <p class="signup-text">New to Student Portal?</p>
-                <a href="#signup" class="signup-link">
+                <a href="{%url 'studentPortal:register' %}" class="signup-link">
                     <i class="fas fa-user-plus"></i>
                     Create an account
                 </a>

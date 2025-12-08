@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Parent,Student, SchoolClass
+from .models import Parent,Student, SchoolClass, StudentProfile
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 # Register your models here.
 
 @admin.register(Parent)
@@ -16,4 +18,17 @@ class StudentClassAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ['admission_number', 'first_name','middle_name', 'last_name', 'class_id','class_stream', 'date_of_birth', 'term', 'parent_id']
+    list_display = ['admission_number','email', 'first_name','middle_name', 'last_name', 'class_id','class_stream', 'date_of_birth', 'term', 'parent_id']
+    
+class StudentProfileInline(admin.StackedInline):
+  model = StudentProfile
+  can_delete = False
+  verbose_name_plural = 'Student Profile'
+
+class UserAdmin(BaseUserAdmin):
+  inlines = [StudentProfileInline]
+
+'''re-register UserAdmin'''
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+admin.site.register(StudentProfile)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.query import AutoField
+from django.contrib.auth.models import User
 import uuid
 
 # create your models here
@@ -55,11 +56,10 @@ class Student(models.Model):
     """
     Student model
     """
-    # Primary Key (auto-generated)
-    id = models.AutoField(primary_key=True)
     
     # Admission Information
-    admission_number = models.CharField(max_length=50, unique=True)
+    admission_number = models.CharField(primary_key=True,max_length=50, unique=True)
+    email = models.ForeignKey(Parent, on_delete = models.CASCADE)
     
     # Personal Information
     first_name = models.CharField(max_length=100)
@@ -99,3 +99,12 @@ class Student(models.Model):
     
     def __str__(self):
         return f"{self.admission_number} - {self.first_name} {self.last_name}"
+
+
+class StudentProfile(models.Model):
+  student = models.OneToOneField(Student, on_delete=models.CASCADE,related_name = 'profile')
+  user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
+
+  def __str__(self):
+    return f'Profile for {self.student.admission_number}'
+
