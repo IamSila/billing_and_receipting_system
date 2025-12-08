@@ -59,7 +59,7 @@ class Student(models.Model):
     
     # Admission Information
     admission_number = models.CharField(primary_key=True,max_length=50, unique=True)
-    email = models.ForeignKey(Parent, on_delete = models.CASCADE)
+    email = models.EmailField()
     
     # Personal Information
     first_name = models.CharField(max_length=100)
