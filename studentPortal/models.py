@@ -93,6 +93,12 @@ class Student(models.Model):
     # Billing Information
     billing_profile_active = models.BooleanField(default=True)
 
+    '''we use this function to fetch a student's fee structure'''
+    def get_fee_structure(self):
+        return FeeStructure.objects.filter(
+            school_class=self.class_id,
+            academic_year=self.class_id.academic_year
+    ).first()
     class Meta:
         db_table = 'students'
         ordering = ['admission_number']
@@ -108,3 +114,36 @@ class StudentProfile(models.Model):
   def __str__(self):
     return f'Profile for {self.student.admission_number}'
 
+
+'''this model stores the school fees'''
+class FeeStructure(models.Model):
+    """
+    Fee structure for a specific class + academic year
+    """
+
+    school_class = models.ForeignKey(
+        SchoolClass,
+        on_delete=models.PROTECT,
+        related_name='fee_structures'
+    )
+
+    academic_year = models.CharField(max_length=20)
+
+    # Example fee components
+    tuition_fee = models.DecimalField(max_digits=10, decimal_places=2)
+    lunch_fee = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    transport_fee = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    other_fees = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+    # Track updates
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'fee_structures'
+        unique_together = ('school_class', 'academic_year')
+        verbose_name = 'Fee Structure'
+        verbose_name_plural = 'Fee Structures'
+
+    def __str__(self):
+        return f"{self.school_class.class_name} - {self.academic_year}"
