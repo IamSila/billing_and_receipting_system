@@ -37,5 +37,5 @@ class StudentLoginForm(forms.Form):
     """
     Form for student login using admission number
     """
-    adm_number = forms.CharField(max_length=20)
+    username = forms.CharField(max_length=20)
     password = forms.CharField(widget=forms.PasswordInput)
