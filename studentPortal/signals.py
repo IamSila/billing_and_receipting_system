@@ -15,8 +15,8 @@ def create_student_user(sender, instance, created, **kwargs):
     # Only create user for new students
     if created:
         # Generate username from admission_number
-        username = f'stu_{instance.admission_number}'
-        password = f'stu_{instance.admission_number}'
+        username = f'{instance.admission_number}'
+        password = f'{instance.admission_number}'
         
         # Check if user already exists
         if User.objects.filter(username=username).exists():

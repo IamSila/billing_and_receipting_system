@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "studentPortal.apps.StudentportalConfig",
+    "schoolAdmin.apps.SchooladminConfig",
 ]
 
 MIDDLEWARE = [
