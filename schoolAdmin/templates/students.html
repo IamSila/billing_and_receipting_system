@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Students</title>
+<style>
+body { font-family: Arial; background:#f4f6f9; margin:0; }
+.sidebar { width:250px; background:#1e293b; color:#fff; height:100vh; position:fixed; padding:20px; }
+.sidebar a { color:white; display:block; padding:10px; text-decoration:none; }
+.sidebar a:hover { background:#334155; }
+.main { margin-left:270px; padding:20px; }
+table { width:100%; border-collapse:collapse; background:white; }
+th, td { padding:12px; border-bottom:1px solid #ddd; }
+th { background:#e2e8f0; }
+</style>
+</head>
+
+<body>
+<div class="sidebar">
+  <h3>School Admin</h3>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="students.html">Students</a>
+  <a href="invoices.html">Invoices</a>
+  <a href="payments.html">Payments</a>
+  <a href="receipts.html">Receipts</a>
+  <a href="reports.html">Reports</a>
+  <a href="settings.html">Settings</a>
+</div>
+{% block content %}
+<div class="main">
+<h2>Students</h2>
+<table>
+<thead>
+<tr>
+  <th>Admission No</th>
+  <th>Name</th>
+  <th>Class</th>
+  <th>Parent</th>
+  <th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>stu_5000</td>
+  <td>John Doe</td>
+  <td>Grade 4A</td>
+  <td>Jane Doe</td>
+  <td><button>View</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+{% endblock content %}
+</body>
+</html>
+

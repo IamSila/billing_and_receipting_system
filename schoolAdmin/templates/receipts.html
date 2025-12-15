@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Receipts</title>
+<style>
+body { font-family: Arial; background:#f4f6f9; margin:0; }
+.sidebar { width:250px; background:#1e293b; color:#fff; height:100vh; position:fixed; padding:20px; }
+.main { margin-left:270px; padding:20px; }
+.card { background:white; padding:15px; margin-bottom:10px; border-radius:6px; }
+</style>
+</head>
+
+<body>
+<div class="sidebar">
+  <a href="dashboard.html">Dashboard</a>
+  <a href="receipts.html">Receipts</a>
+</div>
+{% block content %}
+<div class="main">
+<h2>Receipts</h2>
+<div class="card">
+  <p>Receipt #: RCPT-001</p>
+  <p>Student: stu_5000</p>
+  <p>Amount: 20,000</p>
+  <button>Download PDF</button>
+</div>
+</div>
+
+{% endblock content %}
+</body>
+</html>
+
