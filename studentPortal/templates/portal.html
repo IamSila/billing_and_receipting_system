@@ -550,8 +550,12 @@
                     <i class="fas fa-university"></i>
                 </div>
                 <div class="student-info">
-                    <h1>John Michael Anderson</h1>
-                    <p>Student ID: STU-2024-0012 • Grade 11 • Science Stream</p>
+                    {% if student.middle_name is not None %}
+                        <h1>{{student.first_name}} {{student.middle_name}} {{student.last_name}}</h1>
+                    {% else %}
+                        <h1>{{student.first_name}} {{student.last_name}}</h1>
+                    {%endif%}
+                    <p>Student ID: {{student.admission_number}} • {{student.class_id}} • {{student.class_stream}}</p>
                     <div class="status-badge">
                         <i class="fas fa-check-circle"></i>
                         Fees Status: Active
@@ -617,56 +621,22 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Fee Type</th>
-                        <th>Amount</th>
-                        <th>Due Date</th>
-                        <th>Status</th>
-                        <th>Payment Date</th>
+                        <th>Academic year</th>
+                        <th>Tution Fee</th>
+                        <th>Lunch fee</th>
+                        <th>Transport Fee</th>
+                        <th>Other Fee</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Tuition Fee</td>
-                        <td>$8,000.00</td>
-                        <td>Aug 31, 2024</td>
-                        <td><span class="fee-status status-paid">Paid</span></td>
-                        <td>Aug 25, 2024</td>
+                        <td>{{ fee_structure.academic_year }}</td>
+                        <td>{{ fee_structure.tuition_fee }}</td>
+                        <td>{{ fee_structure.lunch_fee }}</td>
+                        <td>{{ fee_structure.transport_fee }}</td>
+                        <td>{{ fee_structure.other_fees }}</td>
                     </tr>
-                    <tr>
-                        <td>Lab Fees</td>
-                        <td>$1,500.00</td>
-                        <td>Sep 15, 2024</td>
-                        <td><span class="fee-status status-paid">Paid</span></td>
-                        <td>Sep 10, 2024</td>
-                    </tr>
-                    <tr>
-                        <td>Library Fee</td>
-                        <td>$300.00</td>
-                        <td>Oct 01, 2024</td>
-                        <td><span class="fee-status status-pending">Pending</span></td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Sports Fee</td>
-                        <td>$450.00</td>
-                        <td>Oct 15, 2024</td>
-                        <td><span class="fee-status status-overdue">Overdue</span></td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Exam Fees</td>
-                        <td>$1,200.00</td>
-                        <td>Nov 30, 2024</td>
-                        <td><span class="fee-status status-pending">Pending</span></td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Annual Charges</td>
-                        <td>$1,050.00</td>
-                        <td>Dec 15, 2024</td>
-                        <td><span class="fee-status status-pending">Pending</span></td>
-                        <td>-</td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>

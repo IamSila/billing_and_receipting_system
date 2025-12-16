@@ -184,6 +184,8 @@ tr:hover {
     border: none;
     border-radius: 6px;
   }
+{% block css%}
+{% endblock css %}
   </style>
   </head>
 
@@ -198,7 +200,7 @@ tr:hover {
       <li><a href="{% url 'schoolAdmin:invoices' %}">Invoices</a></li>
       <li><a href="{% url 'schoolAdmin:receipts' %}">Receipts</a></li>
       <li><a href="{% url 'schoolAdmin:reports' %}">Reports</a></li>
-      <li>Settings</li>
+      <li><a href="{% url 'schoolAdmin:settings' %}">Settings</a></li>
     </ul>
   </div>
 

@@ -5,11 +5,17 @@
 <html>
 <head>
 <title>Reports</title>
-<style>
-body { font-family: Arial; background:#f4f6f9; margin:0; }
-.sidebar { width:250px; background:#1e293b; color:#fff; height:100vh; position:fixed; padding:20px; }
-.main { margin-left:270px; padding:20px; }
-</style>
+{% block css%}
+.main { padding:20px; }
+.main ul {
+  border: black solid 1px;
+
+}
+.main ul li {
+  list-style: none;
+
+}
+{% endblock css %}
 </head>
 
 <body>

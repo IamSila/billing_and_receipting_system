@@ -32,4 +32,4 @@ def reports(request):
 
 
 def settings(request):
-    return render(request, "Settings.html")
+    return render(request, "settings.html")
