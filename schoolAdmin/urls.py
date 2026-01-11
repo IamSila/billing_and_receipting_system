@@ -9,8 +9,8 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     path("students/", views.students, name="students"),
     path("invoices/", views.invoices, name="invoices"),
-    path("payments", views.payments, name="payments"),
-    path("receipts", views.receipts, name="receipts"),
+    path("payments/", views.payments, name="payments"),
+    path("receipts/", views.receipts, name="receipts"),
     path("reports/", views.reports, name="reports"),
     path("settings/", views.settings, name="settings"),
 ]
